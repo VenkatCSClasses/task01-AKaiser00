@@ -40,6 +40,8 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid(".abc@mail.com")); // special char at beginning of prefix
         assertFalse(BankAccount.isEmailValid("abc#def@mail.com")); // not permitted special char
         assertFalse(BankAccount.isEmailValid("@mail.com")); // empty prefix
+        assertFalse(BankAccount.isEmailValid("abc@@mail.com")); // multiple @ symbols, in a row
+        assertFalse(BankAccount.isEmailValid("abc@mail@archive.com")); // multiple @ symbols
 
 
         // Testing Domain
