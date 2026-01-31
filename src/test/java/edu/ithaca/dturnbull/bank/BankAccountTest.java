@@ -16,12 +16,27 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() throws InsufficientFundsException {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(100);
 
-        assertEquals(100, bankAccount.getBalance(), 0.001);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+        // Valid Withdraw Equiv Class
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(100); 
+        assertEquals(100, bankAccount.getBalance(), 0.001); // Non-Boundary: Doesn't Fully Remove Balance
+
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 200);
+        bankAccount2.withdraw(200); 
+        assertEquals(0, bankAccount2.getBalance(), 0.001); // Boundary: Fully Removes Balance
+
+        // Insufficient Funds Equiv Class
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 200);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount3.withdraw(200.01)); // Boundary: $0.01 Overdraft
+        assertThrows(InsufficientFundsException.class, () -> bankAccount3.withdraw(300)); // Non-Boundary: Overdraft
+
+        // Negative Withdrawal Equiv Class
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(0)); // Boundary: 0 Withdrawal
+        assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(-150)); // Non-Boundary: Negative Withdrawal
     }
+
 
     @Test
     void isEmailValidTest() {
