@@ -9,9 +9,25 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
-        assertEquals(200, bankAccount.getBalance(), 0.001);
+        // Positive Balance
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertEquals(200, bankAccount.getBalance(), 0.001); // Non-Boundary: Normal Positive
+
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 0.01);
+        assertEquals(0.01, bankAccount2.getBalance(), 0.001); // Boundary: Smallest Positive
+
+        // Zero Balance
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
+        assertEquals(0, bankAccount3.getBalance(), 0.001); // Boundary: Zero
+
+        // Negative Balance
+        BankAccount bankAccount4 = new BankAccount("a@b.com", -0.01);
+        assertEquals(-0.01, bankAccount4.getBalance(), 0.001); // Boundary: Largest Negative
+    
+        BankAccount bankAccount5 = new BankAccount("a@b.com", -200);
+        assertEquals(-200, bankAccount5.getBalance(), 0.001); // Non-Boundary: Normal Negative
+    
     }
 
     @Test
