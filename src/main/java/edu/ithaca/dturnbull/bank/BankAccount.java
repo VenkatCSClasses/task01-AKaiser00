@@ -79,7 +79,17 @@ public class BankAccount {
      * @throws InsufficientFundsException If balance is less than amount
      */
     public void transfer(double amount, BankAccount reciever) throws InsufficientFundsException, IllegalArgumentException {
-
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Transfer amount must be valid");
+        }
+        else if (reciever == null){
+            throw new IllegalArgumentException("Reciever cannot be null");
+        }
+        else if (amount > balance){
+            throw new InsufficientFundsException("Not enough money");
+        }
+        withdraw(amount);
+        reciever.deposit(amount);
     }
 
 
