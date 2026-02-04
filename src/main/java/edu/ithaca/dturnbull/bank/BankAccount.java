@@ -36,7 +36,7 @@ public class BankAccount {
      */
     public static boolean isAmountValid(double amount){
         int amountInt = (int) (amount * 100);
-        if ((double) amountInt != (amount * 100)|| amount <= 0){
+        if ((double) amountInt != (amount * 100) || amount <= 0){
             return false;
         }
         return true;
