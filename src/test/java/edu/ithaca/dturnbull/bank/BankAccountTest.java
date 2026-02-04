@@ -31,6 +31,23 @@ class BankAccountTest {
     }
 
     @Test
+    void isAmountValidTest() {
+
+        // Valid Amount
+        assertTrue(BankAccount.isAmountValid(200)); // Non-Boundary: Valid Case
+        assertTrue(BankAccount.isAmountValid(200.11)); // Boundary: Most Decimal Points Allowed
+        assertTrue(BankAccount.isAmountValid(0.00)); // Boundary: Closest To Negative
+
+        // Negative Amount
+        assertFalse(BankAccount.isAmountValid(-200.1)); // Non-Boundary: Negative Case
+        assertFalse(BankAccount.isAmountValid(-0.01)); // Boundary: Closest to Non-Negative
+
+        // >2 Decimal Places
+        assertFalse(BankAccount.isAmountValid(200.333)); // Boundary: 3 Decimal Places
+        assertFalse(BankAccount.isAmountValid(200.33333)); // Non-Boundary: >3 Decimal Places
+    }
+
+    @Test
     void withdrawTest() throws InsufficientFundsException {
 
         // Valid Withdraw Equiv Class
