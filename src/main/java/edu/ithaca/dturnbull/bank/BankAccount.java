@@ -31,7 +31,11 @@ public class BankAccount {
      * @return true if valid (non-negative, max 2 decimal places), false if otherwise
      */
     public static boolean isAmountValid(double amount){
-        return false;
+        int amountInt = (int) (amount * 100);
+        if ((double) amountInt != (amount * 100)|| amount < 0){
+            return false;
+        }
+        return true;
     }
 
     /**
