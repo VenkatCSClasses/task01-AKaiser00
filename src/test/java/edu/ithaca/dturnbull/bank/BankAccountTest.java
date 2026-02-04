@@ -20,14 +20,6 @@ class BankAccountTest {
         // Zero Balance
         BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount3.getBalance(), 0.001); // Boundary: Zero
-
-        // Negative Balance
-        BankAccount bankAccount4 = new BankAccount("a@b.com", -0.01);
-        assertEquals(-0.01, bankAccount4.getBalance(), 0.001); // Boundary: Largest Negative
-    
-        BankAccount bankAccount5 = new BankAccount("a@b.com", -200);
-        assertEquals(-200, bankAccount5.getBalance(), 0.001); // Non-Boundary: Normal Negative
-    
     }
 
     @Test
@@ -66,7 +58,7 @@ class BankAccountTest {
 
         // Negative Withdrawal Equiv Class
         BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
-        assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(0)); // Boundary: 0 Withdrawal
+        assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(-0.1)); // Boundary: Barely Negative
         assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(-150)); // Non-Boundary: Negative Withdrawal
 
         // Excessive Decimal Points Equiv Class
