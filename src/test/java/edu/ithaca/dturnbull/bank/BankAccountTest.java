@@ -28,11 +28,11 @@ class BankAccountTest {
         // Valid Amount
         assertTrue(BankAccount.isAmountValid(200)); // Non-Boundary: Valid Case
         assertTrue(BankAccount.isAmountValid(200.11)); // Boundary: Most Decimal Points Allowed
-        assertTrue(BankAccount.isAmountValid(0.00)); // Boundary: Closest To Negative
+        assertTrue(BankAccount.isAmountValid(0.01)); // Boundary: Closest To Non-Positive
 
         // Negative Amount
         assertFalse(BankAccount.isAmountValid(-200.1)); // Non-Boundary: Negative Case
-        assertFalse(BankAccount.isAmountValid(-0.01)); // Boundary: Closest to Non-Negative
+        assertFalse(BankAccount.isAmountValid(0)); // Boundary: Closest to Non-Negative
 
         // >2 Decimal Places
         assertFalse(BankAccount.isAmountValid(200.333)); // Boundary: 3 Decimal Places
@@ -58,7 +58,7 @@ class BankAccountTest {
 
         // Negative Withdrawal Equiv Class
         BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
-        assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(-0.1)); // Boundary: Barely Negative
+        assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(0)); // Boundary: 0
         assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(-150)); // Non-Boundary: Negative Withdrawal
 
         // Excessive Decimal Points Equiv Class
@@ -66,7 +66,6 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount6.withdraw(100.001)); // Boundary: 3 Decimal Places
         assertThrows(IllegalArgumentException.class, () -> bankAccount6.withdraw(100.0001)); // Non-Boundary: >3 Decimal Places
     }
-
 
     @Test
     void isEmailValidTest() {
@@ -109,6 +108,27 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+
+        // Valid Deposit Equiv Class
+        bankAccount.deposit(100);
+        assertEquals(300, bankAccount.getBalance(), 0.001); // Non-Boundary: Normal Deposit
+        
+        bankAccount.deposit(0.01);
+        assertEquals(300.01, bankAccount.getBalance(), 0.001); // Boundary: Smallest Deposit
+
+        // Negative Amount Equiv Class
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(0)); // Boundary: Zero
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-0.01)); // Boundary: Negative
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-100)); // Non-Boundary: Negative
+
+        // Excessive Decimal Points Equiv Class
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(100.001)); // Boundary: 3 Decimal Places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(100.0001)); // Non-Boundary: >3 Decimal Places
+    }
+
+    @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
@@ -130,5 +150,6 @@ class BankAccountTest {
 
         
     }
+
 
 }

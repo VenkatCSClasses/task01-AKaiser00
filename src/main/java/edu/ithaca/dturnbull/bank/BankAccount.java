@@ -36,7 +36,7 @@ public class BankAccount {
      */
     public static boolean isAmountValid(double amount){
         int amountInt = (int) (amount * 100);
-        if ((double) amountInt != (amount * 100)|| amount < 0){
+        if ((double) amountInt != (amount * 100)|| amount <= 0){
             return false;
         }
         return true;
@@ -58,6 +58,18 @@ public class BankAccount {
             throw new InsufficientFundsException("Not enough money");
         }
     }
+
+    /**
+     * Adds amount to balance
+     * @param amount amount to deposit
+     * @throws IllegalArgumentException if amount is non-positive, or has >2 decimal places
+     */
+    public void deposit(double amount) throws IllegalArgumentException {
+        
+    }
+
+
+
 
     public static boolean isEmailValid(String email) {
         if (email.indexOf('@') == -1) {
