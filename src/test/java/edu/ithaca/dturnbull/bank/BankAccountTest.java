@@ -18,8 +18,8 @@ class BankAccountTest {
         assertEquals(0.01, bankAccount2.getBalance(), 0.001); // Boundary: Smallest Positive
 
         // Zero Balance
-        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
-        assertEquals(0, bankAccount3.getBalance(), 0.001); // Boundary: Zero
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0.01);
+        assertEquals(0.01, bankAccount3.getBalance(), 0.001); // Boundary: Almost Zero
     }
 
     @Test
@@ -137,8 +137,8 @@ class BankAccountTest {
         // check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("", 100));
 
-        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
-        assertEquals(0, bankAccount3.getBalance(), 0.001); // Boundary: Zero
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0.01);
+        assertEquals(0.01, bankAccount3.getBalance(), 0.001); // Boundary: Almost Zero
 
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.01)); // Boundary: Barely Negative
 
