@@ -48,7 +48,7 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException {
+    void withdrawTest() throws InsufficientFundsException, IllegalArgumentException {
 
         // Valid Withdraw Equiv Class
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
@@ -68,6 +68,11 @@ class BankAccountTest {
         BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
         assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(0)); // Boundary: 0 Withdrawal
         assertThrows(IllegalArgumentException.class, () -> bankAccount5.withdraw(-150)); // Non-Boundary: Negative Withdrawal
+
+        // Excessive Decimal Points Equiv Class
+        BankAccount bankAccount6 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount6.withdraw(100.001)); // Boundary: 3 Decimal Places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount6.withdraw(100.0001)); // Non-Boundary: >3 Decimal Places
     }
 
 
@@ -119,6 +124,19 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance(), 0.001);
         // check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("", 100));
+
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
+        assertEquals(0, bankAccount3.getBalance(), 0.001); // Boundary: Zero
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.01)); // Boundary: Barely Negative
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200)); // Non-Boundary: Normal Negative
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 200.001)); // Boundary: 3 Decimal Places
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 200.0001)); // Non-Boundary: >3 Decimal Places
+
+        
     }
 
 }
