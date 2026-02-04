@@ -151,5 +151,33 @@ class BankAccountTest {
         
     }
 
+    @Test
+    void transferTest() throws InsufficientFundsException, IllegalArgumentException {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount2 = new BankAccount("c@d.com", 200);
+
+        // Valid Transfer Equiv Class
+        bankAccount.transfer(100, bankAccount2);
+        assertEquals(100, bankAccount.getBalance(), 0.001); // Sender Balance Decreases
+        assertEquals(300, bankAccount2.getBalance(), 0.001); // Receiver Updated
+
+        bankAccount.transfer(100, bankAccount2); // Boundary: Transfer All
+        assertEquals(0, bankAccount.getBalance(), 0.001); // Sender Empty
+        assertEquals(400, bankAccount2.getBalance(), 0.001); // Receiver Updated
+
+        // Insufficient Funds Equiv Class
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(1, bankAccount2)); // Boundary: Overdraft by 1 (empty)
+        
+        BankAccount bankAccount3 = new BankAccount("e@f.com", 200);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount3.transfer(300, bankAccount2)); // Non-Boundary: Overdraft
+
+        // Invalid Amount Equiv Class
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.transfer(-100, bankAccount2)); // Non-Boundary: Negative
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.transfer(0, bankAccount2)); // Boundary: Zero
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.transfer(100.001, bankAccount2)); // Boundary: 3 Decimal Places
+
+        // Invalid Receiver Equiv Class
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.transfer(100, null)); // Boundary: Null Receiver
+    }
 
 }

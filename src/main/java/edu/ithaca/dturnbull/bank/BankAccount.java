@@ -71,6 +71,17 @@ public class BankAccount {
         balance += amount;
     }
 
+    /**
+     * Transfer money from caller bankAccount to param bankAccount
+     * @param amount amount to transfer 
+     * @param reciever BankAccount to transfer to
+     * @throws IllegalArgumentException If amount is invalid or reciever is null
+     * @throws InsufficientFundsException If balance is less than amount
+     */
+    public void transfer(double amount, BankAccount reciever) throws InsufficientFundsException, IllegalArgumentException {
+
+    }
+
 
 
 
