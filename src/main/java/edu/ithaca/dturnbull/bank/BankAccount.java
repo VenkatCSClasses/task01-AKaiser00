@@ -92,9 +92,6 @@ public class BankAccount {
         reciever.deposit(amount);
     }
 
-
-
-
     public static boolean isEmailValid(String email) {
         if (email.indexOf('@') == -1) {
             return false;

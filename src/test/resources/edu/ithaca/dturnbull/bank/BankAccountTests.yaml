@@ -1,0 +1,426 @@
+- method to be tested on: getBalance
+  name: Positive Balance - Normal Positive
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: []
+  output: 200
+
+- method to be tested on: getBalance
+  name: Positive Balance - Smallest Positive
+  input:
+    account: new BankAccount("a@b.com", 0.01)
+    actions: []
+  output: 0.01
+
+- method to be tested on: getBalance
+  name: Zero Balance - Almost Zero
+  input:
+    account: new BankAccount("a@b.com", 0.01)
+    actions: []
+  output: 0.01
+
+- method to be tested on: isAmountValid
+  name: Valid Amount - Non-Boundary (Valid Case)
+  input:
+    account: null
+    actions: isAmountValid(200)
+  output: true
+
+- method to be tested on: isAmountValid
+  name: Valid Amount - Boundary (Most Decimal Points Allowed)
+  input:
+    account: null
+    actions: isAmountValid(200.11)
+  output: true
+
+- method to be tested on: isAmountValid
+  name: Valid Amount - Boundary (Closest To Non-Positive)
+  input:
+    account: null
+    actions: isAmountValid(0.01)
+  output: true
+
+- method to be tested on: isAmountValid
+  name: Negative Amount - Non-Boundary (Negative Case)
+  input:
+    account: null
+    actions: isAmountValid(-200.1)
+  output: false
+
+- method to be tested on: isAmountValid
+  name: Negative Amount - Boundary (Closest to Non-Negative)
+  input:
+    account: null
+    actions: isAmountValid(0)
+  output: false
+
+- method to be tested on: isAmountValid
+  name: >2 Decimal Places - Boundary (3 Decimal Places)
+  input:
+    account: null
+    actions: isAmountValid(200.333)
+  output: false
+
+- method to be tested on: isAmountValid
+  name: >2 Decimal Places - Non-Boundary (>3 Decimal Places)
+  input:
+    account: null
+    actions: isAmountValid(200.33333)
+  output: false
+
+- method to be tested on: withdraw
+  name: Valid Withdraw Equiv Class - Non-Boundary (Doesn't Fully Remove Balance)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(100)
+  output: 100
+
+- method to be tested on: withdraw
+  name: Valid Withdraw Equiv Class - Boundary (Fully Removes Balance)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(200)
+  output: 0
+
+- method to be tested on: withdraw
+  name: Insufficient Funds Equiv Class - Boundary ($0.01 Overdraft)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(200.01)
+  output: Throws InsufficientFundsException
+
+- method to be tested on: withdraw
+  name: Insufficient Funds Equiv Class - Non-Boundary (Overdraft)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(300)
+  output: Throws InsufficientFundsException
+
+- method to be tested on: withdraw
+  name: Negative Withdrawal Equiv Class - Boundary (0)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(0)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: withdraw
+  name: Negative Withdrawal Equiv Class - Non-Boundary (Negative Withdrawal)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(-150)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: withdraw
+  name: Excessive Decimal Points Equiv Class - Boundary (3 Decimal Places)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(100.001)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: withdraw
+  name: Excessive Decimal Points Equiv Class - Non-Boundary (>3 Decimal Places)
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: withdraw(100.0001)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: isEmailValid
+  name: Blank String Equiv Class
+  input:
+    account: null
+    actions: isEmailValid("")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Smallest Valid Email
+  input:
+    account: null
+    actions: isEmailValid("a@b.cc")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Normal Email
+  input:
+    account: null
+    actions: isEmailValid("abc@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Prefix Empty Equiv Class - Empty Prefix
+  input:
+    account: null
+    actions: isEmailValid("@mail.com")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Prefix Empty Equiv Class - Smallest Valid Prefix
+  input:
+    account: null
+    actions: isEmailValid("a@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Prefix Empty Equiv Class - Normal Prefix
+  input:
+    account: null
+    actions: isEmailValid("abc@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Domain Empty Equiv Class - Missing Domain
+  input:
+    account: null
+    actions: isEmailValid("abc@")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Domain Empty Equiv Class - Smallest Valid Domain
+  input:
+    account: null
+    actions: isEmailValid("abc@d.cc")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Domain Empty Equiv Class - Normal Domain
+  input:
+    account: null
+    actions: isEmailValid("abc@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Domain Tag Length Equiv Class - Tag Length 1
+  input:
+    account: null
+    actions: isEmailValid("abc@d.e")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Domain Tag Length Equiv Class - Tag Length 2
+  input:
+    account: null
+    actions: isEmailValid("abc@d.cc")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Domain Tag Length Equiv Class - Tag Length 3+
+  input:
+    account: null
+    actions: isEmailValid("abc@d.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Invalid Special Characters Equiv Class - 1 Invalid Char
+  input:
+    account: null
+    actions: isEmailValid("abc:abc@def.com")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Invalid Special Characters Equiv Class - 0 Invalid Char
+  input:
+    account: null
+    actions: isEmailValid("abc@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: Special Characters Locations Equiv Class - Special @ Start of Prefix
+  input:
+    account: null
+    actions: isEmailValid("-abc@def.com")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Special Characters Locations Equiv Class - Special @ End of Prefix
+  input:
+    account: null
+    actions: isEmailValid("abc-@def.com")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Special Characters Locations Equiv Class - Consecutive Specials
+  input:
+    account: null
+    actions: isEmailValid("abc--abc@def.com")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: Special Characters Locations Equiv Class - Non-consecutive Special
+  input:
+    account: null
+    actions: isEmailValid("abc-abc@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: "# of @ Symbols Equiv Class - 0 @ Symbols"
+  input:
+    account: null
+    actions: isEmailValid("abcdef.com")
+  output: false
+
+- method to be tested on: isEmailValid
+  name: "# of @ Symbols Equiv Class - 1 @ Symbol"
+  input:
+    account: null
+    actions: isEmailValid("abc@def.com")
+  output: true
+
+- method to be tested on: isEmailValid
+  name: "# of @ Symbols Equiv Class - 2 @ Symbols"
+  input:
+    account: null
+    actions: isEmailValid("abc@def@def.com")
+  output: false
+
+- method to be tested on: deposit
+  name: Valid Deposit Equiv Class - Normal Deposit
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(100)
+  output: 300
+
+- method to be tested on: deposit
+  name: Valid Deposit Equiv Class - Smallest Deposit
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(0.01)
+  output: 300.01
+
+- method to be tested on: deposit
+  name: Negative Amount Equiv Class - Zero
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(0)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: deposit
+  name: Negative Amount Equiv Class - Negative
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(-0.01)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: deposit
+  name: Negative Amount Equiv Class - Normal Negative
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(-100)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: deposit
+  name: Excessive Decimal Points Equiv Class - 3 Decimal Places
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(100.001)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: deposit
+  name: Excessive Decimal Points Equiv Class - >3 Decimal Places
+  input:
+    account: new BankAccount("a@b.com", 200)
+    actions: deposit(100.0001)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: constructor
+  name: Valid Constructor
+  input:
+    account: null
+    actions: new BankAccount("a@b.com", 200)
+  output: Created
+
+- method to be tested on: constructor
+  name: Invalid Email - Empty
+  input:
+    account: null
+    actions: new BankAccount("", 100)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: constructor
+  name: Valid Constructor - Boundary (Almost Zero)
+  input:
+    account: null
+    actions: new BankAccount("a@b.com", 0.01)
+  output: 0.01
+
+- method to be tested on: constructor
+  name: Invalid Balance - Boundary (Barely Negative)
+  input:
+    account: null
+    actions: new BankAccount("a@b.com", -0.01)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: constructor
+  name: Invalid Balance - Non-Boundary (Normal Negative)
+  input:
+    account: null
+    actions: new BankAccount("a@b.com", -200)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: constructor
+  name: Invalid Balance - Boundary (3 Decimal Places)
+  input:
+    account: null
+    actions: new BankAccount("a@b.com", 200.001)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: constructor
+  name: Invalid Balance - Non-Boundary (>3 Decimal Places)
+  input:
+    account: null
+    actions: new BankAccount("a@b.com", 200.0001)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: transfer
+  name: Valid Transfer Equiv Class
+  input:
+    account: "sender: new BankAccount(\"a@b.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(100, receiver)
+  output: "sender: 100, receiver: 300"
+
+- method to be tested on: transfer
+  name: Valid Transfer Equiv Class - Transfer All
+  input:
+    account: "sender: new BankAccount(\"a@b.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(200, receiver)
+  output: "sender: 0, receiver: 400"
+
+- method to be tested on: transfer
+  name: Insufficient Funds Equiv Class - Overdraft by 1
+  input:
+    account: "sender: new BankAccount(\"a@b.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(1, receiver)
+  output: Throws InsufficientFundsException
+
+- method to be tested on: transfer
+  name: Insufficient Funds Equiv Class - Overdraft
+  input:
+    account: "sender: new BankAccount(\"e@f.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(300, receiver)
+  output: Throws InsufficientFundsException
+
+- method to be tested on: transfer
+  name: Invalid Amount Equiv Class - Negative
+  input:
+    account: "sender: new BankAccount(\"e@f.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(-100, receiver)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: transfer
+  name: Invalid Amount Equiv Class - Zero
+  input:
+    account: "sender: new BankAccount(\"e@f.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(0, receiver)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: transfer
+  name: Invalid Amount Equiv Class - 3 Decimal Places
+  input:
+    account: "sender: new BankAccount(\"e@f.com\", 200), receiver: new BankAccount(\"c@d.com\", 200)"
+    actions: sender.transfer(100.001, receiver)
+  output: Throws IllegalArgumentException
+
+- method to be tested on: transfer
+  name: Invalid Receiver Equiv Class - Null Receiver
+  input:
+    account: "sender: new BankAccount(\"e@f.com\", 200)"
+    actions: sender.transfer(100, null)
+  output: Throws IllegalArgumentException

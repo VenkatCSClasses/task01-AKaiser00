@@ -16,10 +16,6 @@ class BankAccountTest {
 
         BankAccount bankAccount2 = new BankAccount("a@b.com", 0.01);
         assertEquals(0.01, bankAccount2.getBalance(), 0.001); // Boundary: Smallest Positive
-
-        // Zero Balance
-        BankAccount bankAccount3 = new BankAccount("a@b.com", 0.01);
-        assertEquals(0.01, bankAccount3.getBalance(), 0.001); // Boundary: Almost Zero
     }
 
     @Test
@@ -154,7 +150,7 @@ class BankAccountTest {
     @Test
     void transferTest() throws InsufficientFundsException, IllegalArgumentException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        BankAccount bankAccount2 = new BankAccount("c@d.com", 200);
+        BankAccouant bankAccount2 = new BankAccount("c@d.com", 200);
 
         // Valid Transfer Equiv Class
         bankAccount.transfer(100, bankAccount2);
