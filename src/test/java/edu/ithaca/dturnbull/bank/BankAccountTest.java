@@ -150,7 +150,7 @@ class BankAccountTest {
     @Test
     void transferTest() throws InsufficientFundsException, IllegalArgumentException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        BankAccouant bankAccount2 = new BankAccount("c@d.com", 200);
+        BankAccount bankAccount2 = new BankAccount("c@d.com", 200);
 
         // Valid Transfer Equiv Class
         bankAccount.transfer(100, bankAccount2);
